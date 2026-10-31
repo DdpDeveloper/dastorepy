@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DA Store PY - Tienda Oficial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-dark: #0b0c10;
+            --sidebar-bg: #12141c;
+            --card-bg: #1a1d27;
+            --accent-yellow: #ffc700;
+            --text-main: #ffffff;
+            --text-muted: #9a9eb0;
+            --border-color: #282c3c;
+            --sidebar-width: 280px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand-container {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand-logo {
+            max-width: 100%;
+            height: auto;
+            max-height: 140px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-item a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item.active a,
+        .nav-item a:hover {
+            background-color: rgba(255, 199, 0, 0.1);
+            color: var(--accent-yellow);
+        }
+
+        .whatsapp-link a {
+            color: #25d366;
+        }
+
+        .whatsapp-link a:hover {
+            background-color: rgba(37, 211, 102, 0.1);
+            color: #25d366;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 30px;
+            min-height: 100vh;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .welcome-text h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .welcome-text p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* Benefits Grid */
+        .benefits-banner {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 35px;
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .benefit-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .benefit-card i {
+            color: var(--accent-yellow);
+            font-size: 20px;
+        }
+
+        .benefit-info h4 {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Product Grid Container */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background-color: #222;
+        }
+
+        .product-info {
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .product-description {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .buy-btn {
+            background-color: var(--accent-yellow);
+            color: #000;
+            text-align: center;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            margin-top: auto;
+            transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .buy-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            body {
+                flex-direction: column;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Navegación -->
+    <aside class="sidebar">
+        <div class="brand-container">
+            <img src="img/logo.png" alt="DA Store PY Logo" class="brand-logo">
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item active">
+                <a href="#"><i class="fa-solid fa-house"></i> Inicio</a>
+            </li>
+            <li class="nav-item whatsapp-link">
+                <a href="https://wa.me/595972436500" target="_blank">
+                    <i class="fa-brands fa-whatsapp"></i> Atención WhatsApp
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Contenido Principal -->
+    <main class="main-content">
+        <header class="top-bar">
+            <div class="welcome-text">
+                <h1>Catálogo de Productos</h1>
+                <p>Todo lo que necesitás, en un solo lugar.</p>
+            </div>
+        </header>
+
+        <!-- Banner de Beneficios -->
+        <section class="benefits-banner">
+            <div class="benefit-card">
+                <i class="fa-solid fa-shield-halved"></i>
+                <div class="benefit-info">
+                    <h4>Compra Segura</h4>
+                </div>
+            </div>
+            <div class="benefit-card">
+                <i class="fa-solid fa-truck-fast"></i>
+                <div class="benefit-info">
+                    <h4>Envíos a todo el país</h4>
+                </div>
+            </div>
+            <div class="benefit-card">
+                <i class="fa-solid fa-star"></i>
+                <div class="benefit-info">
+                    <h4>Productos de calidad</h4>
+                </div>
+            </div>
+            <div class="benefit-card">
+                <i class="fa-solid fa-headset"></i>
+                <div class="benefit-info">
+                    <h4>Atención Personalizada</h4>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grid para Productos -->
+        <section class="products-grid" id="products-container">
+            
+            <!-- Producto 1: Bolsón Impermeable -->
+            <div class="product-card">
+                <img src="img/bolson.jpg" class="product-image" alt="Bolsón Impermeable TPS" onerror="this.src='https://via.placeholder.com/400x300/1a1d27/ffc700?text=Bols%C3%B3n+Impermeable+TPS'">
+                <div class="product-info">
+                    <h3 class="product-title">Bolsón Impermeable TPS</h3>
+                    <p class="product-description">Ideal para viajes, deportes o uso diario. Alta resistencia y protección contra el agua.</p>
+                    <a href="https://zappy.com.py/shop/producto/bolson-impermeable-tps-145289" class="buy-btn" target="_blank">
+                        Comprar Producto <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 2: Taza Autobatidora -->
+            <div class="product-card">
+                <img src="img/tasa.jpg" class="product-image" alt="Taza Autobatidora de Bebidas TPS" onerror="this.src='https://via.placeholder.com/400x300/1a1d27/ffc700?text=Taza+Autobatidora+TPS'">
+                <div class="product-info">
+                    <h3 class="product-title">Taza Autobatidora de Bebidas TPS</h3>
+                    <p class="product-description">Mezcla tus bebidas instantáneamente sin esfuerzo. Ideal para café, batidos y suplementos.</p>
+                    <a href="https://zappy.com.py/shop/producto/taza-autobatidora-de-bebidas-tps-146687" class="buy-btn" target="_blank">
+                        Comprar Producto <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 3: Adaptador Convertidor de Energía -->
+            <div class="product-card">
+                <img src="img/adaptador.jpg" class="product-image" alt="Adaptador Convertidor de Energía para Automóvil TPS" onerror="this.src='https://via.placeholder.com/400x300/1a1d27/ffc700?text=Convertidor+de+Energ%C3%ADa+TPS'">
+                <div class="product-info">
+                    <h3 class="product-title">Adaptador Convertidor de Energía para Automóvil TPS</h3>
+                    <p class="product-description">Convierte la corriente del vehículo para cargar tus dispositivos electrónicos de forma segura en ruta.</p>
+                    <a href="https://zappy.com.py/shop/producto/adaptador-convertidor-de-energia-para-automovil-tps-146689" class="buy-btn" target="_blank">
+                        Comprar Producto <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 4: Morosil Suplemento Natural -->
+            <div class="product-card">
+                <img src="img/morosil.jpg" class="product-image" alt="Morosil Suplemento Natural para Control de Peso TPS" onerror="this.src='https://via.placeholder.com/400x300/1a1d27/ffc700?text=Morosil+Suplemento+TPS'">
+                <div class="product-info">
+                    <h3 class="product-title">Morosil Suplemento Natural para Control de Peso TPS</h3>
+                    <p class="product-description">Extracto natural diseñado para apoyar la quema de grasa localizada y la gestión del peso corporal.</p>
+                    <a href="https://zappy.com.py/shop/producto/morosil-suplemento-natural-para-control-de-peso-tps-146690" class="buy-btn" target="_blank">
+                        Comprar Producto <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+</body>
+</html>
